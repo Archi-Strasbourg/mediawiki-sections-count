@@ -9,13 +9,13 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
     {
-        Mockery::mock('overload:Output')
+        Mockery::mock('overload:ParserOutput')
             ->shouldReceive('getSections')
             ->andReturn(['foo', 'bar']);
         Mockery::mock('overload:Parser')
             ->shouldReceive('setFunctionHook')
             ->shouldReceive('parse')
-            ->andReturn(new \Output());
+            ->andReturn(new \ParserOutput());
         Mockery::mock('overload:ParserOptions');
         Mockery::mock('overload:Revision')
             ->shouldReceive('getText')
