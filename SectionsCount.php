@@ -20,6 +20,7 @@ class SectionsCount
             for ($i = 1; $otherParser->getSection($revision->getText(), $i); $i++) {
                 $nbSections++;
             }
+
             return $nbSections;
         }
     }
