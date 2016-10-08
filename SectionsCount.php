@@ -1,9 +1,9 @@
 <?php
+
 namespace SectionsCount;
 
 class SectionsCount
 {
-
     public static function sectionscount(\Parser $parser, $pagename = null)
     {
         global $wgTitle, $wgRequest, $wgUser, $wgParser;
@@ -17,6 +17,7 @@ class SectionsCount
             //Prevent recursive parsing
             $otherParser = new \Parser();
             $output = $otherParser->parse($revision->getText(), $title, new \ParserOptions($wgUser));
+
             return count($output->getSections());
         }
     }
