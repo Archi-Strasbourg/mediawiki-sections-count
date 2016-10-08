@@ -2,8 +2,8 @@
 
 namespace SectionsCount\Test;
 
-use SectionsCount\SectionsCount;
 use Mockery;
+use SectionsCount\SectionsCount;
 
 class SectionsCountTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,16 +15,16 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
         Mockery::mock('overload:Parser')
             ->shouldReceive('setFunctionHook')
             ->shouldReceive('parse')
-            ->andReturn(new \Output);
+            ->andReturn(new \Output());
         Mockery::mock('overload:ParserOptions');
         Mockery::mock('overload:Revision')
             ->shouldReceive('getText')
             ->shouldReceive('newFromId')
-            ->andReturn(new \Revision, new \Revision, null);
+            ->andReturn(new \Revision(), new \Revision(), null);
         Mockery::mock('overload:Title')
             ->shouldReceive('getLatestRevID')
             ->shouldReceive('newFromText')
-            ->andReturn(new \Title);
+            ->andReturn(new \Title());
     }
 
     protected function tearDown()
@@ -36,7 +36,7 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(2, SectionsCount::sectionscount(new \Parser(), 'Foo'));
         global $wgTitle;
-        $wgTitle = new \Title;
+        $wgTitle = new \Title();
         $this->assertEquals(2, SectionsCount::sectionscount(new \Parser()));
         //And now with Revision::newFromId returning null
         SectionsCount::sectionscount(new \Parser());
@@ -44,6 +44,6 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
 
     public function testOnParserSetup()
     {
-        SectionsCount::onParserSetup(new \Parser);
+        SectionsCount::onParserSetup(new \Parser());
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
-$magicWords = array();
+$magicWords = [];
 
-$magicWords['en'] = array(
-    'sectionscount' => array( 0, 'sectionscount' )
-);
+$magicWords['en'] = [
+    'sectionscount' => [0, 'sectionscount'],
+];
