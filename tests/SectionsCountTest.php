@@ -44,6 +44,7 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
 
     public function testOnParserSetup()
     {
-        SectionsCount::onParserSetup(new \Parser());
+        $parser = new \Parser();
+        SectionsCount::onParserSetup($parser);
     }
 }
