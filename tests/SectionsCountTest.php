@@ -14,8 +14,10 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
             ->andReturn(['foo', 'bar']);
         Mockery::mock('overload:Parser')
             ->shouldReceive('setFunctionHook')
-            ->shouldReceive('parse')
-            ->andReturn(new \ParserOutput());
+            ->shouldReceive('getSection')
+            ->andReturn('foo', 'bar', null, 'foo', 'bar', null)
+            ->shouldReceive('getFreshParser')
+            ->andReturn(new \Parser());
         Mockery::mock('overload:ParserOptions');
         Mockery::mock('overload:Revision')
             ->shouldReceive('getText')
@@ -34,8 +36,10 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
 
     public function testSectionscount()
     {
+        global $wgTitle, $wgParser;
+        $wgParser = new \Parser();
+
         $this->assertEquals(2, SectionsCount::sectionscount(new \Parser(), 'Foo'));
-        global $wgTitle;
         $wgTitle = new \Title();
         $this->assertEquals(2, SectionsCount::sectionscount(new \Parser()));
         //And now with Revision::newFromId returning null

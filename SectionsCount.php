@@ -15,10 +15,12 @@ class SectionsCount
         $revision = \Revision::newFromId($title->getLatestRevID());
         if (isset($revision)) {
             //Prevent recursive parsing
-            $otherParser = new \Parser();
-            $output = $otherParser->parse($revision->getText(), $title, new \ParserOptions($wgUser));
-
-            return count($output->getSections());
+            $otherParser = $wgParser->getFreshParser();
+            $nbSections = 0;
+            for ($i = 1; $otherParser->getSection($revision->getText(), $i); $i++) {
+                $nbSections++;
+            }
+            return $nbSections;
         }
     }
 
