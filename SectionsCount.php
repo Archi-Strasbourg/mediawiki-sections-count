@@ -31,6 +31,8 @@ class SectionsCount
 
             return $nbSections;
         }
+
+        return 0;
     }
 
     public static function onParserSetup(\Parser &$parser)
