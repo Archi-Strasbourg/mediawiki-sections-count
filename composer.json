@@ -2,6 +2,7 @@
   "name": "archi-strasbourg/sections-count",
   "description": "MediaWiki magic word that displays the number of sections in a page",
   "license": "GPL-3.0",
+  "type": "mediawiki-extension",
   "require-dev": {
     "symfony/var-dumper": "~3.1.0",
     "squizlabs/php_codesniffer": "~2.7.0",
