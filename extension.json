@@ -5,7 +5,7 @@
   "description": "Magic word that displays the number of sections in a page",
   "type": "parserhook",
   "license-name": "GPL-3.0",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "Hooks": {
     "ParserFirstCallInit": [
       "SectionsCount\\SectionsCount::onParserSetup"
