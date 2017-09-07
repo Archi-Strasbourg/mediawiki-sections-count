@@ -1,7 +1,7 @@
 {
   "name": "mediawiki-sections-count",
   "description": "Magic word that displays the number of sections in a page",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "author": "Pierre Rudloff",
   "bugs": "https://github.com/Archi-Strasbourg/mediawiki-sections-count/issues",
   "devDependencies": {
