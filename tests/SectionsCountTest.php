@@ -5,6 +5,10 @@ namespace SectionsCount\Test;
 use Mockery;
 use SectionsCount\SectionsCount;
 
+class RevisionStub {
+    const RAW = 0;
+}
+
 class SectionsCountTest extends \PHPUnit_Framework_TestCase
 {
     protected function setUp()
@@ -19,14 +23,16 @@ class SectionsCountTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('getFreshParser')
             ->andReturn(new \Parser());
         Mockery::mock('overload:ParserOptions');
-        Mockery::mock('overload:Revision')
-            ->shouldReceive('getText')
+        Mockery::mock('overload:Revision', RevisionStub::class)
+            ->shouldReceive('getContent')
             ->shouldReceive('newFromId')
             ->andReturn(new \Revision(), new \Revision(), null);
         Mockery::mock('overload:Title')
             ->shouldReceive('getLatestRevID')
             ->shouldReceive('newFromText')
             ->andReturn(new \Title());
+        Mockery::mock('overload:ContentHandler')
+            ->shouldReceive('getContentText');
     }
 
     protected function tearDown()
