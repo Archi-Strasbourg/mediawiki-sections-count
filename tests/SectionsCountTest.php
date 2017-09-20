@@ -5,7 +5,8 @@ namespace SectionsCount\Test;
 use Mockery;
 use SectionsCount\SectionsCount;
 
-class RevisionStub {
+class RevisionStub
+{
     const RAW = 0;
 }
 
