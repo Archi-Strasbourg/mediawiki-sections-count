@@ -23,24 +23,27 @@ class SectionsCount
         } else {
             $title = Title::newFromText($pagename);
         }
-        $revision = Revision::newFromId($title->getLatestRevID());
-        if (isset($revision)) {
-            //Prevent recursive parsing
-            $otherParser = $wgParser->getFreshParser();
-            $nbSections = 0;
-            for ($i = 1; $section = $otherParser->getSection(ContentHandler::getContentText($revision->getContent(Revision::RAW)), $i); $i++) {
-                if (isset($wgSectionsCountIgnoreSections)) {
-                    foreach ($wgSectionsCountIgnoreSections as $ignoreSection) {
-                        if (preg_match('/=+\s*'.$ignoreSection.'\s*=+/', $section) == 1) {
-                            //If this is an ignored section, we don't count it
-                            break 2;
+
+        if (isset($title)) {
+            $revision = Revision::newFromId($title->getLatestRevID());
+            if (isset($revision)) {
+                //Prevent recursive parsing
+                $otherParser = $wgParser->getFreshParser();
+                $nbSections = 0;
+                for ($i = 1; $section = $otherParser->getSection(ContentHandler::getContentText($revision->getContent(Revision::RAW)), $i); $i++) {
+                    if (isset($wgSectionsCountIgnoreSections)) {
+                        foreach ($wgSectionsCountIgnoreSections as $ignoreSection) {
+                            if (preg_match('/=+\s*' . $ignoreSection . '\s*=+/', $section) == 1) {
+                                //If this is an ignored section, we don't count it
+                                break 2;
+                            }
                         }
                     }
+                    $nbSections++;
                 }
-                $nbSections++;
-            }
 
-            return $nbSections;
+                return $nbSections;
+            }
         }
 
         return 0;
