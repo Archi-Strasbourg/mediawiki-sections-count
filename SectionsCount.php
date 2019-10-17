@@ -2,22 +2,33 @@
 
 namespace SectionsCount;
 
+use ContentHandler;
+use Parser;
+use Revision;
+use Title;
+
 class SectionsCount
 {
-    public static function sectionscount(\Parser $parser, $pagename = null)
+    /**
+     * @param Parser $parser
+     * @param null $pagename
+     * @return int
+     * @throws \MWException
+     */
+    public static function sectionscount(Parser $parser, $pagename = null)
     {
-        global $wgTitle, $wgRequest, $wgUser, $wgParser, $wgSectionsCountIgnoreSections;
+        global $wgTitle, $wgParser, $wgSectionsCountIgnoreSections;
         if (empty($pagename)) {
             $title = $wgTitle;
         } else {
-            $title = \Title::newFromText($pagename);
+            $title = Title::newFromText($pagename);
         }
-        $revision = \Revision::newFromId($title->getLatestRevID());
+        $revision = Revision::newFromId($title->getLatestRevID());
         if (isset($revision)) {
             //Prevent recursive parsing
             $otherParser = $wgParser->getFreshParser();
             $nbSections = 0;
-            for ($i = 1; $section = $otherParser->getSection(\ContentHandler::getContentText($revision->getContent(\Revision::RAW)), $i); $i++) {
+            for ($i = 1; $section = $otherParser->getSection(ContentHandler::getContentText($revision->getContent(Revision::RAW)), $i); $i++) {
                 if (isset($wgSectionsCountIgnoreSections)) {
                     foreach ($wgSectionsCountIgnoreSections as $ignoreSection) {
                         if (preg_match('/=+\s*'.$ignoreSection.'\s*=+/', $section) == 1) {
@@ -35,7 +46,11 @@ class SectionsCount
         return 0;
     }
 
-    public static function onParserSetup(\Parser &$parser)
+    /**
+     * @param Parser $parser
+     * @throws \MWException
+     */
+    public static function onParserSetup(Parser &$parser)
     {
         $parser->setFunctionHook('sectionscount', ['SectionsCount\SectionsCount', 'sectionscount']);
     }
