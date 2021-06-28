@@ -20,7 +20,7 @@ class SectionsCount
      */
     public static function sectionscount(Parser $parser, $pagename = null): int
     {
-        global $wgTitle, $wgParser, $wgSectionsCountIgnoreSections;
+        global $wgTitle, $wgSectionsCountIgnoreSections;
         if (empty($pagename)) {
             $title = $wgTitle;
         } else {
@@ -31,7 +31,7 @@ class SectionsCount
             $revision = MediaWikiServices::getInstance()->getRevisionLookup()->getRevisionById($title->getLatestRevID());
             if (isset($revision)) {
                 //Prevent recursive parsing
-                $otherParser = $wgParser->getFreshParser();
+                $otherParser = new Parser();
                 $nbSections = 0;
                 for ($i = 1; $section = $otherParser->getSection(ContentHandler::getContentText($revision->getContent(SlotRecord::MAIN, RevisionRecord::RAW)), $i); $i++) {
                     if (isset($wgSectionsCountIgnoreSections)) {
