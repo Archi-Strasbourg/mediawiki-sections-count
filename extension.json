@@ -1,4 +1,5 @@
 {
+  "manifest_version": 2,
   "name": "SectionsCount",
   "author": "Pierre Rudloff",
   "url": "https://github.com/Archi-Strasbourg/mediawiki-sections-count",
