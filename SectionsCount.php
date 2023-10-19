@@ -31,7 +31,7 @@ class SectionsCount
             $revision = MediaWikiServices::getInstance()->getRevisionLookup()->getRevisionById($title->getLatestRevID());
             if (isset($revision)) {
                 //Prevent recursive parsing
-                $otherParser = new Parser();
+                $otherParser = MediaWikiServices::getInstance()->getParserFactory()->create();
                 $nbSections = 0;
                 for ($i = 1; $section = $otherParser->getSection(ContentHandler::getContentText($revision->getContent(SlotRecord::MAIN, RevisionRecord::RAW)), $i); $i++) {
                     if (isset($wgSectionsCountIgnoreSections)) {
