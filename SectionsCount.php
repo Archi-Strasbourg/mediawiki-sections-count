@@ -33,16 +33,19 @@ class SectionsCount
                 //Prevent recursive parsing
                 $otherParser = MediaWikiServices::getInstance()->getParserFactory()->create();
                 $nbSections = 0;
-                for ($i = 1; $section = $otherParser->getSection(ContentHandler::getContentText($revision->getContent(SlotRecord::MAIN, RevisionRecord::RAW)), $i); $i++) {
-                    if (isset($wgSectionsCountIgnoreSections)) {
-                        foreach ($wgSectionsCountIgnoreSections as $ignoreSection) {
-                            if (preg_match('/=+\s*' . $ignoreSection . '\s*=+/', $section) == 1) {
-                                //If this is an ignored section, we don't count it
-                                break 2;
+                $content = $revision->getContent(SlotRecord::MAIN, RevisionRecord::RAW);
+                if ($content instanceof \TextContent) {
+                    for ($i = 1; $section = $otherParser->getSection($content->getText(), $i); $i++) {
+                        if (isset($wgSectionsCountIgnoreSections)) {
+                            foreach ($wgSectionsCountIgnoreSections as $ignoreSection) {
+                                if (preg_match('/=+\s*' . $ignoreSection . '\s*=+/', $section) == 1) {
+                                    //If this is an ignored section, we don't count it
+                                    break 2;
+                                }
                             }
                         }
+                        $nbSections++;
                     }
-                    $nbSections++;
                 }
 
                 return $nbSections;
